@@ -18,7 +18,7 @@ composer require khsing/laravel-restapi
 
 * modify `config/app.php`, add it `providers` with following lines
 
-```
+```php
 Khsing\Restapi\OAuth2ServiceProvider::class,
 Khsing\Restapi\RestapiServiceProvider::class,
 
@@ -50,7 +50,7 @@ fill user id, client name and get client secret.
 
 - Modify `routes/api.php`
 
-```
+```php
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
@@ -80,7 +80,7 @@ btw. Postman is great tools. And the most great part is it's free.
 
 - modify `config/api.php` auth part
 
-```
+```php
     'auth' => [
         'restapi' => \Khsing\Restapi\DingoAuthServiceProvider::class,
     ]
@@ -88,7 +88,7 @@ btw. Postman is great tools. And the most great part is it's free.
 
 - example of dingo/api, in `routes/api.php` same function
 
-```
+```php
 $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', ['middleware' => 'api:auth'], function ($api) {
     $api->get('user', function (Request $request) {
