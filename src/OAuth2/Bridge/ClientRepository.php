@@ -3,8 +3,8 @@
 /**
  * @Author: khsing
  * @Date:   2017-07-21 10:54:16
- * @Last Modified by:   khsing
- * @Last Modified time: 2017-07-21 11:29:13
+ * @Last Modified by:   Guixing Bai
+ * @Last Modified time: 2017-07-21 12:41:17
  */
 
 namespace Khsing\Restapi\OAuth2\Bridge;

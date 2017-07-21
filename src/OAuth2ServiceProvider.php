@@ -2,8 +2,8 @@
 /**
  * @Author: khsing
  * @Date:   2017-07-21 00:14:47
- * @Last Modified by:   khsing
- * @Last Modified time: 2017-07-21 10:56:27
+ * @Last Modified by:   Guixing Bai
+ * @Last Modified time: 2017-07-21 12:44:15
  */
 namespace Khsing\Restapi;
 
@@ -12,6 +12,8 @@ use Laravel\Passport\PassportServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
 use League\OAuth2\Server\AuthorizationServer;
 use Laravel\Passport\Bridge\PersonalAccessGrant;
+use Laravel\Passport\Bridge\ScopeRepository;
+use Laravel\Passport\Bridge\AccessTokenRepository;
 
 /**
 * Custom Passport provider
@@ -28,9 +30,9 @@ class OAuth2ServiceProvider extends ServiceProvider
     public function makeAuthorizationServer()
     {
         return new AuthorizationServer(
-            $this->app->make(Bridge\ClientRepository::class),
-            $this->app->make(Bridge\AccessTokenRepository::class),
-            $this->app->make(Bridge\ScopeRepository::class),
+            $this->app->make(OAuth2\Bridge\ClientRepository::class),
+            $this->app->make(AccessTokenRepository::class),
+            $this->app->make(ScopeRepository::class),
             'file://'.Passport::keyPath('oauth-private.key'),
             app('encrypter')->getKey()
         );
