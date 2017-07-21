@@ -86,6 +86,18 @@ btw. Postman is great tools. And the most great part is it's free.
     ]
 ```
 
+- example of dingo/api, in `routes/api.php` same function
+
+```
+$api = app('Dingo\Api\Routing\Router');
+$api->version('v1', ['middleware' => 'api:auth'], function ($api) {
+    $api->get('user', function (Request $request) {
+        return $request->user();
+    });
+});
+
+```
+
 
 ## License
 
