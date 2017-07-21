@@ -1,0 +1,29 @@
+{
+    "name": "khsing/laravel-restapi",
+    "description": "Quick but dirty setup a RESTful API project with Laravel, be evil! ;-)",
+    "type": "library",
+    "require": {
+        "laravel/laravel": "^5.4",
+        "laravel/passport": "^3.0",
+        "dingo/api": "1.0.*@dev",
+        "hashids/hashids": "^2.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "~0.9",
+        "phpunit/phpunit": "~5.0"
+    },
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Khsing\\Restapi\\": "src/"
+        },
+        "files" : ["src/helpers.php"]
+    },
+    "authors": [
+        {
+            "name": "Guixing Bai",
+            "email": "khsing.cn@gmail.com"
+        }
+    ]
+}
