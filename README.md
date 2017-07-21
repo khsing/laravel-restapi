@@ -62,10 +62,9 @@ btw. Postman is great tools. And the most great part is it's free.
 
 ## Intergrate with Dingo/api
 
-- install dingo/api, `composer require dingo/api:1.0.*@dev`
-- add dingo to `providers`
+- install dingo/api, `composer require dingo/api:1.0.x@dev`
+- add dingo to `providers`, `Dingo\Api\Provider\LaravelServiceProvider::class,`
 - `php artisan vendor:publish`
-- add service provider to `config/app.php`, `Khsing\Restapi\DingoAuthServiceProvider::class,`
 - modify `app/Http/Kernel.php` with following lines
 
 ```php
