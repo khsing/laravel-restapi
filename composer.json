@@ -3,7 +3,7 @@
     "description": "Quick but dirty setup a RESTful API project with Laravel, be evil! ;-)",
     "type": "library",
     "require": {
-        "laravel/framework" : "5.4.*",
+        "laravel/framework" : "5.4.* || 5.5.*",
         "laravel/passport": "^3.0",
         "hashids/hashids": "^2.0"
     },
