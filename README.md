@@ -6,7 +6,7 @@ This package make OAuth2.0 client credentials able to assign User.
 
 ### Feature
 
-- client ID support Hashids to encrypt real ID.
+* client ID support Hashids to encrypt real ID.
 
 ## Installation
 
@@ -29,6 +29,15 @@ Khsing\Restapi\RestapiServiceProvider::class,
 
 * Need follow [laravel/passport](https://github.com/laravel/passport) setup
 
+Since Laravel 5.5 LTS, passport would specific route register, can custom in `app/Providers/AuthServiceProvider.php`
+
+```php
+Passport::routes(function ($router) {
+    $router->forAccessTokens();
+    $router->forTransientTokens();
+});
+```
+
 ## Configuare
 
 Support following configure options.
@@ -42,7 +51,7 @@ Support following configure options.
 
 - create a client app id and secret.
 
-```
+```bash
 php artisan passport:client
 ```
 
@@ -62,7 +71,7 @@ btw. Postman is great tools. And the most great part is it's free.
 
 ## Intergrate with Dingo/api
 
-- install dingo/api, `composer require dingo/api:1.0.x@dev`
+- install dingo/api, `composer require dingo/api:2.0.0-alpha1`
 - add dingo to `providers`, `Dingo\Api\Provider\LaravelServiceProvider::class,`
 - `php artisan vendor:publish`
 - modify `app/Http/Kernel.php` with following lines

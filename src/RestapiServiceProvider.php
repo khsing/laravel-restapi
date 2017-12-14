@@ -39,6 +39,13 @@ class RestapiServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        if (class_exists('Dingo\Api\Exception\Handler')) {
+            app('Dingo\Api\Exception\Handler')->register(function (\Illuminate\Auth\AuthenticationException $exception) {
+                return response()->json([
+                    'error' => 'Unauthenticated.'
+                ], 401);
+            });
+        }
     }
 
 
