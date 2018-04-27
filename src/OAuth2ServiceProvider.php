@@ -8,20 +8,18 @@
 namespace Khsing\Restapi;
 
 use DateInterval;
-use Laravel\Passport\PassportServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
+use Laravel\Passport\Bridge\ScopeRepository;
 use League\OAuth2\Server\AuthorizationServer;
 use Laravel\Passport\Bridge\PersonalAccessGrant;
-use Laravel\Passport\Bridge\ScopeRepository;
 use Laravel\Passport\Bridge\AccessTokenRepository;
+use Laravel\Passport\PassportServiceProvider as ServiceProvider;
 
 /**
 * Custom Passport provider
 */
 class OAuth2ServiceProvider extends ServiceProvider
 {
-
-
     /**
      * Make the authorization service instance.
      *
