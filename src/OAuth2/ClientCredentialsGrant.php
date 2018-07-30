@@ -8,10 +8,11 @@
 
 namespace Khsing\Restapi\OAuth2;
 
-use League\OAuth2\Server\Grant\ClientCredentialsGrant as Grant;
-use League\OAuth2\Server\ResponseTypes\ResponseTypeInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Laravel\Passport\ClientRepository;
+use League\OAuth2\Server\RequestEvent;
+use Psr\Http\Message\ServerRequestInterface;
+use League\OAuth2\Server\ResponseTypes\ResponseTypeInterface;
+use League\OAuth2\Server\Grant\ClientCredentialsGrant as Grant;
 
 /**
 * Custom client credentials
@@ -28,19 +29,16 @@ class ClientCredentialsGrant extends Grant
     ) {
         // Validate request
         $client = $this->validateClient($request);
-        $scopes = $this->validateScopes($this->getRequestParameter('scope', $request));
-
-        // issue AccessToken with user id
-        $clientId = $this->getClientId($request);
-        $clientRepository = new ClientRepository;
-        $clientInfo = $clientRepository->findActive($clientId);
-        $userId = is_null($clientInfo) ? null : $clientInfo->user_id;
+        $scopes = $this->validateScopes($this->getRequestParameter('scope', $request, $this->defaultScope));
 
         // Finalize the requested scopes
-        $scopes = $this->scopeRepository->finalizeScopes($scopes, $this->getIdentifier(), $client);
+        $finalizedScopes = $this->scopeRepository->finalizeScopes($scopes, $this->getIdentifier(), $client);
 
         // Issue and persist access token
-        $accessToken = $this->issueAccessToken($accessTokenTTL, $client, $userId, $scopes);
+        $accessToken = $this->issueAccessToken($accessTokenTTL, $client, $this->getUserId($request), $finalizedScopes);
+
+        // Send event to emitter
+        $this->getEmitter()->emit(new RequestEvent(RequestEvent::ACCESS_TOKEN_ISSUED, $request));
 
         // Inject access token into response type
         $responseType->setAccessToken($accessToken);
@@ -48,9 +46,16 @@ class ClientCredentialsGrant extends Grant
         return $responseType;
     }
 
+    private function getUserId(ServerRequestInterface $request)
+    {
+        $clientId = $this->getClientId($request);
+        $clientInfo = (new ClientRepository())->findActive($clientId);
+
+        return is_null($clientInfo) ? null : $clientInfo->user_id;
+    }
+
     private function getClientId(ServerRequestInterface $request)
     {
-
         list($basicAuthUser, $basicAuthPassword) = $this->getBasicAuthCredentials($request);
 
         $clientId = $this->getRequestParameter('client_id', $request, $basicAuthUser);
